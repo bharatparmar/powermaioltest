@@ -45,7 +45,7 @@ THIS IS ONLY AN EXAMPLE SECTION
 
 <f:section name="example">
 	<f:alias map="{flashMessageClass:'powermail_message_error'}">
-		<f:render partial="Misc/FlashMessages" arguments="{_all}" />
+		<f:render partial="FlashMessages/{vh:Misc.GetFlashMessagesPartialName()}" arguments="{_all}" />
 	</f:alias>
 
 
@@ -58,9 +58,9 @@ THIS IS ONLY AN EXAMPLE SECTION
 
 
 	2. Get all Values by using powermail_all
-	<vh:string.escapeLabels>
+	<vh:string.RawAndRemoveXss>
 		{powermail_all}
-	</vh:string.escapeLabels>
+	</vh:string.RawAndRemoveXss>
 
 	3. Get some lonely fields
 	Hi {firstname} {lastname}, thank you for your email.<br />

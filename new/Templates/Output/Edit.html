@@ -8,10 +8,10 @@
 
 <f:section name="main">
 	<f:alias map="{flashMessageClass:'powermail_message_ok'}">
-		<f:render partial="Misc/FlashMessages" arguments="{_all}" />
+		<f:render partial="FlashMessages/{vh:Misc.GetFlashMessagesPartialName()}" arguments="{_all}" />
 	</f:alias>
 
-	<div class="powermail_frontend edit">
+	<div class="powermail_frontend">
 		<f:if condition="{mail}">
 			<f:then>
 				<f:if condition="{vh:Condition.IsAllowedToEdit(settings:settings, mail:mail)}">

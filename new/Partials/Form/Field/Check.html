@@ -1,7 +1,9 @@
 {namespace vh=In2code\Powermail\ViewHelpers}
 
 <div class="powermail_fieldwrap powermail_fieldwrap_type_check powermail_fieldwrap_{field.marker} {field.css} {settings.styles.framework.fieldAndLabelWrappingClasses}">
-	<f:render partial="Form/FieldLabel" arguments="{_all}" />
+	<label class="{settings.styles.framework.labelClasses}" title="{field.description}">
+		<vh:string.RawAndRemoveXss>{field.title}</vh:string.RawAndRemoveXss><f:if condition="{field.mandatory}"><span class="mandatory">*</span></f:if>
+	</label>
 
 	<div class="{settings.styles.framework.fieldWrappingClasses}">
 		<f:for each="{field.modifiedSettings}" as="setting" iteration="index">
@@ -14,7 +16,7 @@
 							id="powermail_field_{field.marker}_{index.cycle}"
 							additionalAttributes="{vh:Validation.ValidationDataAttribute(field:field, iteration:index)}"
 							class="powermail_checkbox powermail_checkbox_{field.uid}" />
-					<vh:string.escapeLabels>{setting.label}</vh:string.escapeLabels>
+					<vh:string.RawAndRemoveXss>{setting.label}</vh:string.RawAndRemoveXss>
 				</label>
 			</div>
 		</f:for>

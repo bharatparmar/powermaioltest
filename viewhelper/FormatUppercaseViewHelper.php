@@ -45,6 +45,7 @@ class FormatUppercaseViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\Abstr
     }
 
 	/**
+	 *
 	 * @return string
 	 */
 	public function render(){

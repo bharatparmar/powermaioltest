@@ -50,8 +50,9 @@ class IsINViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelp
 	 * @return int
 	 */
 	public function render(){
-		$needle = $this->arguments['needle'];
 		$haystack = $this->arguments['haystack'];
+		$needle = $this->arguments['needle'];
+
 		$check = FALSE;
 		if(strpos($haystack, ',') > 0){
 			$haystackArr = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $haystack);

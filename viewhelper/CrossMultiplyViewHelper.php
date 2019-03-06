@@ -40,24 +40,23 @@ class CrossMultiplyViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\Abstrac
     public function initializeArguments()
     {
         parent::initializeArguments();
-        $this->registerArgument('numerator', 'integer', 'numerator',true,NULL);
-        $this->registerArgument('denominator', 'integer', 'denominator',true,NULL);
-        $this->registerArgument('multiplier', 'integer', 'multiplier',true,NULL);
+        $this->registerArgument('numerator', 'int', 'numerator',false,NULL);
+        $this->registerArgument('denominator', 'int', 'denominator',false,NULL);
+        $this->registerArgument('multiplier', 'int', 'multiplier',false,NULL);
         $this->registerArgument('unit', 'string', 'unit',false,'');
-        $this->registerArgument('decimals', 'integer', 'decimals',false,2);
-
+        $this->registerArgument('decimals', 'int', 'decimals',false,2);
     }
 
     /**
-      * @return mixed
+     * @return mixed
      */
     public function render(){
-
         $numerator = $this->arguments['numerator'];
         $denominator = $this->arguments['denominator'];
         $multiplier = $this->arguments['multiplier'];
         $unit = $this->arguments['unit'];
         $decimals = $this->arguments['decimals'];
+
         if ( $denominator != 0 ){
             $solution = $numerator / $denominator * $multiplier;
             $solution = number_format ( $solution, $decimals, ',' , '.' );

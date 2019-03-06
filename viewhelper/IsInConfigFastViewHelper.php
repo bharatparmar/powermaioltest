@@ -51,7 +51,6 @@ class IsInConfigFastViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\Abstra
 	 * @return int
 	 */
 	public function render(){
-
 		$partUid = $this->arguments['partUid'];
 		$trailerUid = $this->arguments['trailerUid'];
 

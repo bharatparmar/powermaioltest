@@ -41,9 +41,8 @@ class CheckFilterViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractV
     public function initializeArguments()
     {
         parent::initializeArguments();
-        $this->registerArgument('value', 'mixed', 'value',true,NULL);
-        $this->registerArgument('argument', 'mixed', 'argument',true,NULL);
-
+        $this->registerArgument('value', 'mixed', 'value',false,NULL);
+        $this->registerArgument('argument', 'mixed', 'argument',false,NULL);
     }
 
 	/**
@@ -53,6 +52,7 @@ class CheckFilterViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractV
 	public function render(){
 		$value = $this->arguments['value'];
 		$argument = $this->arguments['argument'];
+
 		if($value == $argument){
 			return TRUE;
 		} else {

@@ -56,7 +56,7 @@ class PriceByIpFastViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\Abstrac
 		$trailerUid = $this->arguments['trailerUid'];
 	/*
 		$settings = $this->templateVariableContainer->get('settings');
-		$geoIp = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\KcHumbaurProducts\Utility\GeoIpHelper');
+		$geoIp = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\KcHumbaurProducts\Utility\GeoIp');
 
 		$price = $geoIp->priceByIp($part, $trailer);
 

@@ -41,20 +41,31 @@ class ImageExistsViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractV
     public function initializeArguments()
     {
         parent::initializeArguments();
-        $this->registerArgument('file', 'string', 'Part-File-Name',false,NULL);
+        $this->registerArgument('file', 'string', 'Absolute path',false,NULL);
     }
 
 	/**
 	 * Check if given file is a regular file
-
 	 * @return boolean
+	 *
 	 */
 	public function render(){
 		$file = $this->arguments['file'];
+
+		$filesingle = 'fileadmin/img_shop/'.$file;
 		$fileParts = 'fileadmin/img_parts/'.$file;
-		if (file_exists($fileParts) && is_file($fileParts)) {
-			return TRUE;
+		$output = '';
+		if (file_exists($filesingle) && is_file($filesingle)) {
+			$result = TRUE;
+			return $result;
 		}
+		if (file_exists($fileParts) && is_file($fileParts)) {
+			$result = TRUE;
+			return $result;
+		}
+
 		return FALSE;
 	}
 }
+
+?>

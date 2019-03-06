@@ -32,8 +32,6 @@ namespace TYPO3\KcHumbaurProducts\ViewHelpers;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-use TYPO3\KcHumbaurProducts\Utility\PriceCalc;
-
 class CalcByIpShippingViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
@@ -43,21 +41,22 @@ class CalcByIpShippingViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\Abst
     public function initializeArguments()
     {
         parent::initializeArguments();
-        $this->registerArgument('parts', '\TYPO3\CMS\Extbase\Persistence\Generic\QueryResult', 'parts',true,NULL);
-        $this->registerArgument('trailer', '\TYPO3\CMS\Extbase\Persistence\Generic\QueryResult', 'trailer',true,NULL);
-
+        $this->registerArgument('parts', '\TYPO3\CMS\Extbase\Persistence\Generic\QueryResult', 'parts',false,NULL);
+        $this->registerArgument('trailer', '\TYPO3\KcHumbaurProducts\Domain\Model\Trailer', 'trailer',false,NULL);
     }
+
 	/**
 	 * return the localization of the User as lowercase ISO2-code
 	 *
 	 * @return
 	 */
 	public function render(){
+
 		$parts = $this->arguments['parts'];
 		$trailer = $this->arguments['trailer'];
 
 		$settings = $this->templateVariableContainer->get('settings');
-		$priceSettings = new PriceCalc();
+		$priceSettings = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\KcHumbaurProducts\Utility\PriceCalc');
 
 		$price = $priceSettings->calcByIpShipping($parts, $trailer, $settings);
 		if($price == NULL){

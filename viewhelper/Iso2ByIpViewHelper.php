@@ -33,28 +33,24 @@ namespace TYPO3\KcHumbaurProducts\ViewHelpers;
  *
  */
 
-use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3\KcHumbaurGeoip\Utility\GeoIpHelper;
+class Iso2ByIpViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper {
 
-class Iso2ByIpViewHelper extends AbstractViewHelper
-{
-    /**
-     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
-     */
-    public function initializeArguments()
-    {
-        $this->registerArgument('fallback', 'mixed', 'Determines if Fallback should be used', FALSE, TRUE);
-    }
+	public function initializeArguments() {
+		$this->registerArgument('fallback', 'mixed', 'Determines if Fallback should be used', FALSE, TRUE);
+	}
 
-    /**
-     * return the localization of the User as lowercase ISO2-code
-     *
-     * @return string
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     */
-    public function render()
-    {
-        //we had to return a string
-        return GeoIpHelper::Instance()->getCountryByIp();
-    }
+	/**
+	 * return the localization of the User as lowercase ISO2-code
+	 *
+	 *
+	 * @return string
+	 */
+	public function render(){
+		$fallback = $this->arguments['fallback'];
+		$geoIp = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\KcHumbaurProducts\Utility\GeoIp');
+		return $geoIp->iso2ByIp($fallback);
+	}
+
 }
+
+?>

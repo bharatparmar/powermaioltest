@@ -41,7 +41,6 @@ class MiniSliderImagesViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\Abst
     {
         parent::initializeArguments();
         $this->registerArgument('text', 'string', 'text',false,NULL);
-
     }
 
     /**
@@ -49,6 +48,7 @@ class MiniSliderImagesViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\Abst
      */
     public function render(){
         $text = $this->arguments['text'];
+
         if ( $text ){
             $textdecoded = html_entity_decode($text);
             $textstripped = strip_tags($textdecoded, '<img><figure></figure><figcaption></figcaption>'); // We do not need the rest ..

@@ -41,13 +41,11 @@ class FileSizeViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractView
     public function initializeArguments()
     {
         parent::initializeArguments();
-        $this->registerArgument('size', 'integer', 'size',false,NULL);
-
+        $this->registerArgument('size', 'int', 'size',false,NULL);
     }
 
 	/**
 	 *
-	 * @param int $size
 	 * @return string
 	 */
 	public function render(){

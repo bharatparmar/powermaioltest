@@ -49,9 +49,11 @@ class IsSubstringViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractV
 	 *
 	 * @return int
 	 */
-	public function render(){
-		$needle = $this->arguments['needle'];
+	public function render($needle, $haystack){
+
 		$haystack = $this->arguments['haystack'];
+		$needle = $this->arguments['needle'];
+
 		if( strpos($haystack, $needle) !== FALSE ){
 			return TRUE;
 		}else{

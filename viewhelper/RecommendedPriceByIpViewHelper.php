@@ -33,8 +33,6 @@ namespace TYPO3\KcHumbaurProducts\ViewHelpers;
  *
  */
 
-use TYPO3\KcHumbaurProducts\Utility\PriceHelper;
-
 class RecommendedPriceByIpViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
@@ -44,18 +42,50 @@ class RecommendedPriceByIpViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\
     public function initializeArguments()
     {
         parent::initializeArguments();
-        $this->registerArgument('product', 'int', 'product',false,NULL);
+        $this->registerArgument('part', '\TYPO3\KcHumbaurProducts\Domain\Model\Part', 'part',false,NULL);
+        $this->registerArgument('trailer', '\TYPO3\KcHumbaurProducts\Domain\Model\Trailer', 'trailer',false,NULL);
     }
 
 	/**
-	 * return localized price object
+	 * return the localization of the User as lowercase ISO2-code
 	 *
 	 * @return float
 	 */
-	public function render() {
-		$product = $this->arguments['product'];
-		return PriceHelper::RecommendedpriceByIp($product);
+	public function render(){
+		$part = $this->arguments['part'];
+		$trailer = $this->arguments['trailer'];
+
+		$settings = $this->templateVariableContainer->get('settings');
+		$geoIp = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\KcHumbaurProducts\Utility\GeoIp');
+
+		$price = $geoIp->recommendedPriceByIp($part, $trailer);
+
+		$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Object\ObjectManager');
+		$configurationManager = $objectManager->get('TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface');
+		$settings = $configurationManager->getConfiguration(
+				\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS, 'KcHumbaurProducts'
+		);
+
+
+		/*
+		**	25.02.2014 / oliverk
+		** Specialprices / Pricehighlights should only be shown in Germany
+		** (so said by Waliczek)
+		*/
+
+
+		if($geoIp->iso2ByIp() !== "de" || $settings["SpecialPriceHidden"] == "1")
+		{
+			if(isset($price) && method_exists($price, "setSpecialpricegross"))
+			{
+				$price->setSpecialpricegross(0);
+				$price->setSpecialpricenet(0);
+			}
+		}
+		return $price;
+
 	}
+
 }
 
 ?>

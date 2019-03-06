@@ -33,7 +33,6 @@ namespace TYPO3\KcHumbaurProducts\ViewHelpers;
  */
 class ProductDetailHeaderViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper {
 
-
     /**
      * @param string $stringInput
      * Initialize arguments
@@ -49,7 +48,7 @@ class ProductDetailHeaderViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\A
      * Automatically puts the text after the first word in a B tag so it can be targeted by CSS
      * @return mixed
      */
-    public function render(){
+    public function render($text, $color = false){
         $text = $this->arguments['text'];
         $color = $this->arguments['color'];
 

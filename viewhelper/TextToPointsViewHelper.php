@@ -4,7 +4,7 @@ namespace TYPO3\KcHumbaurProducts\ViewHelpers;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2018 Sascha Urbanek
+ *  (c) 2015 Sascha Urbanek
  *
  *  All rights reserved
  *
@@ -33,7 +33,6 @@ namespace TYPO3\KcHumbaurProducts\ViewHelpers;
  */
 class TextToPointsViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper {
 
-
     /**
      * @param string $stringInput
      * Initialize arguments
@@ -49,19 +48,17 @@ class TextToPointsViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\Abstract
      */
     public function render(){
         $text = $this->arguments['text'];
-        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump('in');exit;
         if ( $text ){
             // The text ist used like a CSV here, we generate our Information for the info-points from it
             // first the points ...
             $punktearray = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode("\n",$text);
-            // Now we split the points up into the 3 Info-Elements (For image,left position,top position)
+            // Now we split the points up into the 3 Info-Elements (Text,X,Y)
             foreach( $punktearray AS $punkt){
-                $punktarray = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(",",$punkt);
-                $punktefinal[] = array( 'image' => $punktarray[0],
-                                        'left'  => $punktarray[1],
-                                        'top'   => $punktarray[2]    );
-                                }
-
+                $punktarray = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(";",$punkt);
+                $punktefinal[] = array( 'text' => $punktarray[0],
+                    'x' => $punktarray[1],
+                    'y' => $punktarray[2]    );
+            }
             return $punktefinal;
         }else{
             return false;

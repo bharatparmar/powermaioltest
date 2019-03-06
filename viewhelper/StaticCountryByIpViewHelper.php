@@ -45,7 +45,7 @@ class StaticCountryByIpViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\Abs
 	 */
 	public function render(){
 
-		$geoIp = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\KcHumbaurProducts\Utility\GeoIpHelper');
+		$geoIp = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\KcHumbaurProducts\Utility\GeoIp');
 
 		return $geoIp->staticCountryByIp(FALSE);
 

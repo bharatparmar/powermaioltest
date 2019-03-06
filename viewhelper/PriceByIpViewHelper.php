@@ -33,31 +33,60 @@ namespace TYPO3\KcHumbaurProducts\ViewHelpers;
  *
  */
 
-use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3\KcHumbaurGeoip\Utility\GeoIpHelper;
-use TYPO3\KcHumbaurProducts\Domain\Model\Price;
+class PriceByIpViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper {
 
-class PriceByIpViewHelper extends AbstractViewHelper {
-
-
-    /**
+	/**
      * @param string $stringInput
      * Initialize arguments
      */
     public function initializeArguments()
     {
         parent::initializeArguments();
-        $this->registerArgument('product', 'object', 'product',false,NULL);
+        $this->registerArgument('part', '\TYPO3\KcHumbaurProducts\Domain\Model\Part', 'part',false,NULL);
+        $this->registerArgument('trailer', '\TYPO3\KcHumbaurProducts\Domain\Model\Trailer', 'trailer',false,NULL);
     }
 
-    /**
-     * return localized price object
-     *
-     * @return Price
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     */
-	public function render() {
-        $product = $this->arguments['product'];
-		return GeoIpHelper::Instance()->priceByIp($product);
+	/**
+	 * return the localization of the User as lowercase ISO2-code
+	 *
+	 * @return float
+	 */
+	public function render(){
+		$part = $this->arguments['part'];
+		$trailer = $this->arguments['trailer'];
+
+		$settings = $this->templateVariableContainer->get('settings');
+		$geoIp = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\KcHumbaurProducts\Utility\GeoIp');
+
+		$iso2 = $geoIp->iso2ByIp();
+		$price = $geoIp->priceByIp($part, $trailer);
+
+
+		$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Object\ObjectManager');
+		$configurationManager = $objectManager->get('TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface');
+		$settings = $configurationManager->getConfiguration(
+				\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS, 'KcHumbaurProducts'
+		);
+
+		/*
+		**	25.02.2014 / oliverk
+		** Specialprices / Pricehighlights should only be shown in Germany
+		** (so said by Waliczek)
+		*/
+		if(($iso2 !== "de" && $iso2 !== "ch") || $settings["SpecialPriceHidden"] == "1")
+		{
+			if(isset($price) && method_exists($price, "setSpecialpricegross"))
+			{
+				$price->setSpecialpricegross(0);
+				$price->setSpecialpricenet(0);
+			}
+		}
+
+
+		return $price;
+
 	}
+
 }
+
+?>

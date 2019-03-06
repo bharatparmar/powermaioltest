@@ -25,9 +25,16 @@ namespace TYPO3\KcHumbaurProducts\ViewHelpers;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+/**
+ *
+ *
+ * @package kc_humbaur_products
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ *
+ */
+class HasAssembledPartSingleFastViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper {
 
-class HasAssembledPartSingleFastViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper {
+
 
 	/**
      * @param string $stringInput
@@ -45,13 +52,16 @@ class HasAssembledPartSingleFastViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHe
 	 *
 	 * @return string
 	 */
-	public function render() {
+
+	public function render(){
+
 		$partUid = $this->arguments['partUid'];
 		$trailerUid = $this->arguments['trailerUid'];
 
-		$partAssembled = GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Object\ObjectManager')->get('TYPO3\KcHumbaurProducts\Domain\Repository\PartReferenceRepository');
-		$partAssembledArray[] = $partAssembled->findIfAssembled($partUid, $trailerUid);
+		$partAssembled = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\KcHumbaurProducts\Domain\Repository\PartReferenceRepository');
+		$partAssembledArray;
 
+		$partAssembledArray[] = $partAssembled->findIfAssembled($partUid, $trailerUid);
 		return $partAssembled->searchForAssembled('1', $partAssembledArray);
 	}
 }

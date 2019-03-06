@@ -47,12 +47,12 @@ class IsInConfigViewHelper  extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractVi
         $this->registerArgument('part', '\TYPO3\KcHumbaurProducts\Domain\Model\Part', 'part',false,NULL);
     }
 
-
 	/**
 	 *
 	 * @return int
 	 */
 	public function render(){
+
 		$trailer = $this->arguments['trailer'];
 		$part = $this->arguments['part'];
 
